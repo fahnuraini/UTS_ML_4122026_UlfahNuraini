@@ -1,0 +1,42 @@
+# Import library yang diperlukan
+# Import library yang dibutuhkan
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# 1. Membuat dataset buatan (klasifikasi biner)
+X, y = make_classification(
+    n_samples=500,   # jumlah sampel
+    n_features=5,    # jumlah fitur
+    n_informative=3, # fitur yang relevan
+    n_redundant=0,   # fitur redundant
+    n_classes=2,     # kelas target (0 dan 1)
+    random_state=42
+)
+
+# 2. Membagi data menjadi train (70%) dan test (30%)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# 3. Membuat model Regresi Logistik
+model = LogisticRegression()
+
+# 4. Melatih model dengan data training
+model.fit(X_train, y_train)
+
+# 5. Melakukan prediksi pada data test
+y_pred = model.predict(X_test)
+
+# 6. Mengevaluasi model
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred)
+
+print(f"Akurasi Model: {accuracy:.2f}\n")
+print("Confusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(report)
+
